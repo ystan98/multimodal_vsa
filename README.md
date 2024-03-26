@@ -26,7 +26,7 @@ You can download the text dataset from the following link:
 
 ## Image Dataset
 You can download the image dataset from the following link:
-[Text Dataset](https://shorturl.at/uwBNS)
+[Image Dataset](https://shorturl.at/uwBNS)
 
 ### Contents:
 - **image_new.csv**: CSV file containing the self-curated image dataset
