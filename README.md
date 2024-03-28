@@ -25,32 +25,57 @@ This repository presents a late fusion multimodal approach to video sentiment an
   - **imaged.zip**: Contains all the images listed in image_new.csv.
   - **image_embeddings.zip**: Contains image embeddings for the dataset (suggested).
 
+### Videos for Inference
+- **[Download Results (CSV)](https://shorturl.at/asGNP)**
+  - Note: The last character of the video file name indicates the sentiment. For instance, video_0 refers to negative, and video_1 refers to positive.
+  - Due to large file sizes, video data has been split into several zip files:
+    - **video.zip**
+    - **extra_vid.zip**
+    - **extra_vid2.zip**
+
 ## Models Weights
 - **[Download Model Weights](https://shorturl.at/klHLM)**
   - **audio_classifier.pth**: For audio classifier.
   - **new_image_classifier.pth**: For image classifier.
   - **text_classifier.pth**: For text classifier.
 
-## Evaluation files
-- **[Download results (CSV)](https://shorturl.at/xGJT4)**
-  - **final_result.csv**: List of results for all individual modality of the test videos
-
+## Evaluation Files
+- **[Download Results (CSV)](https://shorturl.at/xGJT4)**
+  - **final_result.csv**: List of results for all individual modalities of the test videos.
 
 ## Instructions
 - Model architecture and training codes are included in `classifier.py`.
-- An example of training is shown in `image_training_sample` notebook, using image classifier as an example.
-- It is computationally expensive to put my integrated models to run together due to the huge amount of resources it consumes, hence the notebooks have splitted the models into different part (by modality)
-- Evaluation results of individual classifiers can be concatenated via python or via excel. Final evaluation results are shown in `final_result.csv`
+- An example of training is shown in `image_training_sample` notebook, using the image classifier as an example.
+- The integrated models are computationally expensive to run together due to resource consumption. Hence, the notebooks have split the models by modality, as seen in `inference_sample`.
+- Evaluation results of individual classifiers can be concatenated using Python or Excel. Final evaluation results are shown in `final_result.csv`.
 
 ### Model Training
 1. Download all datasets.
 2. Optionally, use the models to generate embeddings, or use the provided embeddings to save time.
-3. Refer to sample notebook training. An example of image classifier is provided in `image_training_sample`
+3. Refer to the sample notebook training. An example of the image classifier is provided in `image_training_sample`.
 
-### Model inference and testing on unseen videos
-1. WIP
-2. WIP
+### Model Inference and Testing on Unseen Videos
+1. Load the models and use them for inference:
+
+    ```python
+    checkpoint_path = './new_image_classifier.pth'
+    loaded_checkpoint = torch.load(checkpoint_path)
+    image_model.load_state_dict(loaded_checkpoint['model_state_dict'])
+    image_model.eval()
+
+    checkpoint_path = './text_classifier.pth'
+    loaded_checkpoint = torch.load(checkpoint_path)
+    text_model.load_state_dict(loaded_checkpoint['model_state_dict'])
+    text_model.eval()
+
+    checkpoint_path = './audio_classifier.pth'
+    loaded_checkpoint = torch.load(checkpoint_path)
+    audio_model.load_state_dict(loaded_checkpoint['model_state_dict'])
+    audio_model.eval()
+    ```
+
+2. Refer to `inference_sample` for an example.
 
 ### Voting Mechanism and Evaluation
 1. Use `final_result.csv` that has already been processed.
-2. Run the sample notebook given, titled `final_evaluation`
+2. Run the sample notebook given, titled `final_evaluation`.
